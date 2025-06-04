@@ -6,9 +6,14 @@ async function main() {
   await vending.waitForDeployment();
   const address = await vending.getAddress();
   console.log("VendingMachine deployed to:", address);
-  // сохраняем адрес для backend/frontend
+  // сохраняем адрес для backend и копируем его для фронтенда
   require("fs").writeFileSync(
     "./address.json",
+    JSON.stringify({ address }, null, 2)
+  );
+  // фронтенд берёт адрес из src/address.json
+  require("fs").writeFileSync(
+    "./frontend/src/address.json",
     JSON.stringify({ address }, null, 2)
   );
 }
