@@ -9,7 +9,7 @@ async function main() {
   const address = await vending.getAddress();
   console.log("VendingMachine deployed to:", address);
   // путь к корню проекта, где находится этот скрипт
-  const root = path.join(__dirname, "..");
+  const root = path.resolve(__dirname, "..");
   // сохраняем адрес для backend
   fs.writeFileSync(
     path.join(root, "address.json"),
@@ -28,7 +28,10 @@ async function main() {
     "VendingMachine.sol",
     "VendingMachine.json"
   );
-  fs.copyFileSync(artifact, path.join(root, "frontend", "src", "VendingMachine.json"));
+  fs.copyFileSync(
+    artifact,
+    path.join(root, "frontend", "src", "VendingMachine.json")
+  );
 }
 
 main()
