@@ -32,7 +32,7 @@ app.get("/products", async (_, res) => {
   ]);
 });
 
-// покупка через backend (альтернатива клику в Metamask)
+// покупка через backend без использования браузерного кошелька
 app.post("/buy", async (req, res) => {
   const { amount } = req.body;
   try {

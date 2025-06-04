@@ -15,23 +15,7 @@ async function main() {
     path.join(root, "address.json"),
     JSON.stringify({ address }, null, 2)
   );
-  // фронтенд берёт адрес из src/address.json
-  fs.writeFileSync(
-    path.join(root, "frontend", "src", "address.json"),
-    JSON.stringify({ address }, null, 2)
-  );
-  // копируем ABI, чтобы фронт использовал актуальный контракт
-  const artifact = path.join(
-    root,
-    "artifacts",
-    "contracts",
-    "VendingMachine.sol",
-    "VendingMachine.json"
-  );
-  fs.copyFileSync(
-    artifact,
-    path.join(root, "frontend", "src", "VendingMachine.json")
-  );
+  // фронтенд получает данные через backend
 }
 
 main()

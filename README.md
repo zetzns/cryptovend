@@ -4,7 +4,6 @@ Demo dApp that sells a pack of snacks via Ethereum smart contract.
 
 ## Requirements
 * Node.js 18+
-* [MetaMask](https://metamask.io/) browser extension
 
 ## Setup
 
@@ -44,12 +43,6 @@ npm start
 
 Open `http://localhost:3000` in the browser.
 
-## Connecting MetaMask
+The frontend communicates with the backend API, which signs and sends
+transactions using a default Hardhat account. No browser wallet is required.
 
-Add a custom network in MetaMask with the following parameters:
-
-- **Network name**: Hardhat Local
-- **RPC URL**: `http://127.0.0.1:8545`
-- **Chain ID**: `31337`
-
-After that load the page and click **"Connect MetaMask"** to authorize the DApp.
