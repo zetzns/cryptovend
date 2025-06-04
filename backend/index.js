@@ -10,7 +10,7 @@ const abi = JSON.parse(
 
 const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545"); // локальный Hardhat
 const wallet = new ethers.Wallet(
-  "0x59c6995e998f97a5a00449736f5dc00e10953340", // тестовый ключ Hardhat
+  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", // тестовый ключ Hardhat
   provider
 );
 const contract = new ethers.Contract(address, abi, wallet);
