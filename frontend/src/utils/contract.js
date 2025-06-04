@@ -1,10 +1,10 @@
-import vendingAbi from "../../../artifacts/contracts/VendingMachine.sol/VendingMachine.json" assert { type: "json" };
-import addressJson from "../../../address.json" assert { type: "json" };
+import vendingAbi from "../VendingMachine.json";
+import addressJson from "../address.json";
 import { ethers } from "ethers";
 
-export function getContract() {
+export async function getContract() {
   if (!window.ethereum) throw new Error("Metamask required");
   const provider = new ethers.BrowserProvider(window.ethereum);
-  const signer = provider.getSigner();
+  const signer = await provider.getSigner();
   return new ethers.Contract(addressJson.address, vendingAbi.abi, signer);
 }
