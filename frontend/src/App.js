@@ -18,7 +18,7 @@ export default function App() {
   }, []);
 
   async function refreshStock() {
-    const contract = getContract();
+    const contract = await getContract();
     setStock((await contract.stock()).toString());
   }
 
@@ -40,7 +40,7 @@ export default function App() {
 
   async function buy() {
     try {
-      const contract = getContract();
+      const contract = await getContract();
       const tx = await contract.buy(amount, {
         value: ethers.parseEther((0.01 * amount).toString())
       });
