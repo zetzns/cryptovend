@@ -6,14 +6,36 @@ export default function App() {
   const [stock, setStock] = useState(0);
   const [amount, setAmount] = useState(1);
   const [status, setStatus] = useState("");
+  const [account, setAccount] = useState(null);
 
   useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_accounts" })
+        .then(accounts => accounts[0] && setAccount(accounts[0]));
+    }
     refreshStock();
   }, []);
 
   async function refreshStock() {
     const contract = getContract();
     setStock((await contract.stock()).toString());
+  }
+
+  async function connect() {
+    if (!window.ethereum) {
+      setStatus("Установите MetaMask");
+      return;
+    }
+    try {
+      const [acc] = await window.ethereum.request({
+        method: "eth_requestAccounts"
+      });
+      setAccount(acc);
+      setStatus("");
+    } catch (e) {
+      setStatus("Ошибка подключения: " + e.message);
+    }
   }
 
   async function buy() {
@@ -34,6 +56,11 @@ export default function App() {
   return (
     <div style={{ maxWidth: 500, margin: "40px auto", fontFamily: "sans-serif" }}>
       <h1>Крипто-вендинг: Кириешки</h1>
+      {!account ? (
+        <button onClick={connect}>Подключить MetaMask</button>
+      ) : (
+        <p>Подключено: {account}</p>
+      )}
       <p>В наличии: {stock} пачек</p>
       <label>
         Сколько купить:
