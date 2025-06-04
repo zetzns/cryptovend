@@ -11,6 +11,7 @@ Demo dApp that sells a pack of snacks via Ethereum smart contract.
 1. Install dependencies:
 
 ```bash
+npm install
 cd backend && npm install
 cd ../frontend && npm install
 ```
