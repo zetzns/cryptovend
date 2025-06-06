@@ -19,22 +19,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// список товаров (пока один)
+// список товаров
 app.get("/products", async (_, res) => {
-  const stock = await contract.stock();
+  const stock = (await contract.stock()).toString();
   res.json([
     {
       id: 1,
       name: "Сухарики Кириешки",
       priceEth: "0.01",
-      stock: stock.toString()
+      stock
+    },
+    {
+      id: 2,
+      name: "Липтон чёрный",
+      priceEth: "0.01",
+      stock
+    },
+    {
+      id: 3,
+      name: "Сухарики 3 Корочки",
+      priceEth: "0.01",
+      stock
     }
   ]);
 });
 
 // покупка через backend без использования браузерного кошелька
 app.post("/buy", async (req, res) => {
-  const { amount } = req.body;
+  const { amount } = req.body; // productId ignored as все товары стоят одинаково
   try {
     const tx = await contract.buy(amount, {
       value: ethers.parseEther((0.01 * amount).toString())
