@@ -19,39 +19,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// локальные запасы трёх товаров
+const products = [
+  { id: 1, name: "Сухарики Кириешки", priceEth: 0.01, stock: 100 },
+  { id: 2, name: "Липтон чёрный", priceEth: 0.01, stock: 100 },
+  { id: 3, name: "Сухарики 3 Корочки", priceEth: 0.01, stock: 100 }
+];
+
 // список товаров
 app.get("/products", async (_, res) => {
-  const stock = (await contract.stock()).toString();
-  res.json([
-    {
-      id: 1,
-      name: "Сухарики Кириешки",
-      priceEth: "0.01",
-      stock
-    },
-    {
-      id: 2,
-      name: "Липтон чёрный",
-      priceEth: "0.01",
-      stock
-    },
-    {
-      id: 3,
-      name: "Сухарики 3 Корочки",
-      priceEth: "0.01",
-      stock
-    }
-  ]);
+  res.json(products);
 });
 
 // покупка через backend без использования браузерного кошелька
 app.post("/buy", async (req, res) => {
-  const { amount } = req.body; // productId ignored as все товары стоят одинаково
+  const { productId, amount } = req.body;
+  const product = products.find(p => p.id === productId);
+  if (!product) {
+    return res.status(400).json({ error: "Invalid product" });
+  }
+  if (amount <= 0 || product.stock < amount) {
+    return res.status(400).json({ error: "Not enough stock" });
+  }
   try {
     const tx = await contract.buy(amount, {
-      value: ethers.parseEther((0.01 * amount).toString())
+      value: ethers.parseEther((product.priceEth * amount).toString())
     });
     await tx.wait();
+    product.stock -= amount;
     res.json({ txHash: tx.hash });
   } catch (e) {
     res.status(400).json({ error: e.toString() });
