@@ -1,0 +1,38 @@
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fefefe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.card input {
+  width: 60px;
+  text-align: center;
+}
+
+.status {
+  margin-top: 20px;
+  font-weight: bold;
+}
